@@ -6,7 +6,7 @@ import numpy as np #科学计算
 import matplotlib.pyplot as plt#图库
 import os
 
-data = pd.read_csv(os.path.dirname(os.path.dirname(__file__))+"/data/train.csv")
+data = pd.read_csv('train.csv')
 def aa():
     print(data.describe())
     print(data.info())
@@ -52,14 +52,17 @@ def aa():
 def bb():
     fig = plt.figure()
     fig.set(alpha=0.2)  # 设定图表颜色alpha参数
-    Survived_0 = data.Pclass[data.Survived == 0].value_counts()
-    Survived_1 = data.Pclass[data.Survived == 1].value_counts()
+    Survived_0 = data.loc[data['年龄'] <= data['年龄'].mean, ['年龄']].value_counts()
+    Survived_1 = data.loc[data['年龄'] > data['年龄'].mean, ['年龄']].value_counts()
+    print (Survived_0, Survived_1)
+    '''
     df = pd.DataFrame({u'获救': Survived_1, u'未获救': Survived_0})
     df.plot(kind='bar', stacked=True)
     plt.title(u"各乘客等级的获救情况")
     plt.xlabel(u"乘客等级")
     plt.ylabel(u"人数")
     plt.show()
+    '''
 
 #性别无疑也要作为重要特征加入最后的模型之中
 def cc():
@@ -155,7 +158,7 @@ def gg():
 if __name__ == "__main__":
     #aa()
     #bb()
-    #cc()
+    cc()
     #dd()
     ##ee()
     #ff()
