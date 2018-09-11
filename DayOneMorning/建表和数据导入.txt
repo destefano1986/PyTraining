@@ -1,0 +1,108 @@
+
+DROP TABLE `dim_prv_corp_id`;
+create table dim_prv_corp_id
+(
+	prv_corp_id		varchar(20),
+	prv_corp_name	varchar(20),
+	p_corp_id	varchar(20)
+);
+
+SET SESSION BULK_INSERT_BUFFER_SIZE=156217728;
+load data infile 'dim_prv_corp_id.txt' 
+into table `dim_prv_corp_id` 
+character set utf8
+fields terminated by ','  OPTIONALLY  ENCLOSED BY '"' ESCAPED BY ''
+ lines terminated by '\r\n' (prv_corp_id,prv_corp_name,p_corp_id) ; 
+
+DROP TABLE `dim_city_corp_id`;
+create table dim_city_corp_id
+(
+	city_corp_id		varchar(20),
+	city_corp_name	varchar(20),
+	p_corp_id	varchar(20)
+);
+load data infile 'dim_city_corp_id.txt' 
+into table `dim_city_corp_id` 
+character set utf8
+fields terminated by ','  OPTIONALLY  ENCLOSED BY '"' ESCAPED BY ''
+ lines terminated by '\r\n' (city_corp_id,city_corp_name,p_corp_id) ; 
+
+DROP TABLE `dim_sub_corp_id`;
+create table dim_sub_corp_id
+(
+	sub_corp_id		varchar(20),
+	sub_corp_name	varchar(20),
+	p_corp_id	varchar(20)
+);
+load data infile 'dim_sub_corp_id.txt' 
+into table `dim_sub_corp_id` 
+character set utf8
+fields terminated by ','  OPTIONALLY  ENCLOSED BY '"' ESCAPED BY ''
+ lines terminated by '\r\n' (sub_corp_id,sub_corp_name,p_corp_id) ; 
+
+DROP TABLE `dim_cell_id`;
+create table dim_cell_id
+(
+	cell_id			varchar(20),
+	cell_name		varchar(1000),
+	cell_type		varchar(20),
+	sub_corp_id		varchar(20),
+	cell_status		varchar(20)
+);
+load data infile 'dim_cell_id.txt' 
+into table `dim_cell_id` 
+character set utf8
+fields terminated by ','  OPTIONALLY  ENCLOSED BY '"' ESCAPED BY ''
+ lines terminated by '\r\n' (cell_id,cell_name,cell_type,sub_corp_id,cell_status) ; 
+ 
+ DROP TABLE `tb_alarm_Monitoring_report`;
+create table tb_alarm_Monitoring_report
+(
+	alarm_seq		varchar(20),
+	alarm_id		varchar(4000),
+	alarm_starttime	DATETIME,
+	alarm_endtime	DATETIME,
+	cell_name		varchar(1000)
+);
+SET SESSION BULK_INSERT_BUFFER_SIZE=156217728;
+load data infile 'tb_alarm_Monitoring_report.txt' 
+into table `tb_alarm_Monitoring_report` 
+fields terminated by ','  OPTIONALLY  ENCLOSED BY '"' ESCAPED BY ''
+ lines terminated by '\r\n' (alarm_seq,alarm_id,alarm_starttime,alarm_endtime,cell_name) ; 
+
+
+----------Êä³ö±í
+create table alarms
+(
+	wg_alarm_id		varchar(20),
+	alarm_starttime	DATETIME,
+	alarm_endtime	DATETIME,
+	alarm_cell_id	varchar(200),
+	alarm_title		varchar(200),
+	cell_id			varchar(20)
+);
+drop index alarms.asdf;
+
+create table faults
+(
+	wg_alarm_id		varchar(20),
+	alarm_starttime	DATETIME,
+	alarm_endtime	DATETIME,
+	alarm_cell_id	varchar(200),
+	alarm_title		varchar(200),
+	cell_id			varchar(20)
+);
+
+create table tb_citys_alarm
+(
+alarm_seq	varchar(20)
+alarm_id	varchar(20)
+alarm_starttime	DATETIME
+alarm_endtime	DATETIME
+cell_name	varchar(20)
+cell_id	varchar(20)
+cell_status	varchar(20)
+prv_corp_id	varchar(20)
+city_corp_id	varchar(20)
+sub_corp_id	varchar(20)
+);
